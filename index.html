@@ -283,7 +283,7 @@ function classify(sleepHours, wakeHours, duration) {
   // 老干部：傍晚早睡（12:00~20:59），不含凌晨
   if (sleepHours >= 12 && sleepHours < 21) {
     return { tag: 'tag-laoganbu', icon: '👴', label: '老干部作息',
-      detail: `${fmtTime(sleepHours)} 睡觉、${fmtTime(wakeHours)} 起床——退休生活，就是这么朴实无华，话说回来了，你这个年纪怎么睡得着觉的！。` };
+      detail: `${fmtTime(sleepHours)} 睡觉、${fmtTime(wakeHours)} 起床——退休生活，就是这么朴实无华，话说回来了，你这个年纪怎么睡得着觉啊！` };
   }
   if (duration > 12) {
     return { tag: 'tag-god', icon: '😴', label: '睡神降临',
