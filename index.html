@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>健康作息计算器</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+h1 {
+  text-align: center;
+  color: #e0dfff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  text-align: center;
+  color: rgba(224,223,255,0.5);
+  font-size: 0.85rem;
+  margin-bottom: 32px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.input-group label {
+  color: #c4c0f0;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.input-group select {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c4c0f0' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.input-group select:focus {
+  outline: none;
+  border-color: rgba(160,140,255,0.6);
+  box-shadow: 0 0 0 3px rgba(160,140,255,0.15);
+}
+
+.input-group select option {
+  background: #1a1744;
+  color: #fff;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #6c5ce7, #a855f7);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: transform 0.1s, box-shadow 0.2s;
+  letter-spacing: 0.05em;
+}
+
+.btn:hover {
+  box-shadow: 0 8px 30px rgba(108,92,231,0.4);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.result {
+  margin-top: 24px;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.result.hidden { display: none; }
+
+.result-icon {
+  font-size: 3rem;
+  margin-bottom: 8px;
+}
+
+.result-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.result-duration {
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 12px;
+}
+
+.result-detail {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* 各分类配色 */
+.tag-laoganbu { background: rgba(180,160,120,0.15); border: 1px solid rgba(180,160,120,0.3); }
+.tag-laoganbu .result-label { color: #c8b896; }
+.tag-laoganbu .result-detail { color: #a09078; }
+
+.tag-healthy { background: rgba(100,220,140,0.12); border: 1px solid rgba(100,220,140,0.3); }
+.tag-healthy .result-label { color: #6cdc8c; }
+.tag-healthy .result-detail { color: #50b870; }
+
+.tag-god { background: rgba(160,140,255,0.12); border: 1px solid rgba(160,140,255,0.3); }
+.tag-god .result-label { color: #b8a8ff; }
+.tag-god .result-detail { color: #9080d0; }
+
+.tag-timezone { background: rgba(100,180,240,0.12); border: 1px solid rgba(100,180,240,0.3); }
+.tag-timezone .result-label { color: #80c8ff; }
+.tag-timezone .result-detail { color: #60a8e0; }
+
+.tag-refugee { background: rgba(255,150,100,0.12); border: 1px solid rgba(255,150,100,0.3); }
+.tag-refugee .result-label { color: #ffa060; }
+.tag-refugee .result-detail { color: #d08040; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>健康作息计算器</h1>
+  <p class="subtitle">换个时区/换个星球，你的作息就是健康的</p>
+
+  <div class="input-group">
+    <label>我</label>
+    <select id="sleep-time"></select>
+    <label>睡觉</label>
+  </div>
+
+  <div class="input-group">
+    <label>我</label>
+    <select id="wake-time"></select>
+    <label>起床</label>
+  </div>
+
+  <button class="btn" id="calc-btn">算一下</button>
+
+  <div id="result" class="result hidden"></div>
+</div>
+
+<script>
+// ========== 初始化下拉框 ==========
+function buildTimeOptions() {
+  const opts = [];
+  for (let h = 0; h < 24; h++) {
+    for (let m of [0, 30]) {
+      const hh = String(h).padStart(2, '0');
+      const mm = String(m).padStart(2, '0');
+      opts.push(`${hh}:${mm}`);
+    }
+  }
+  return opts;
+}
+
+const timeOptions = buildTimeOptions();
+
+function populateSelect(id, defaultVal) {
+  const sel = document.getElementById(id);
+  for (const t of timeOptions) {
+    const opt = document.createElement('option');
+    opt.value = t;
+    opt.textContent = t;
+    if (t === defaultVal) opt.selected = true;
+    sel.appendChild(opt);
+  }
+}
+
+populateSelect('sleep-time', '23:00');
+populateSelect('wake-time', '07:00');
+
+// ========== 工具函数 ==========
+function toHours(timeStr) {
+  const [h, m] = timeStr.split(':').map(Number);
+  return h + m / 60;
+}
+
+function fmtTime(hours) {
+  // 把小数小时转成 HH:MM，处理跨天
+  let h = Math.floor(hours) % 24;
+  if (h < 0) h += 24;
+  let m = Math.round((hours % 1) * 60);
+  if (m === 60) { h++; m = 0; }
+  if (h === 24) h = 0;
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+}
+
+function calcDuration(sleepHours, wakeHours) {
+  let d = wakeHours - sleepHours;
+  if (d <= 0) d += 24;
+  return d;
+}
+
+// ========== 时区 → 真实地点 ==========
+const tzMap = {
+  '-12': '贝克岛（UTC-12）',
+  '-11': '美属萨摩亚（UTC-11）',
+  '-10': '夏威夷（UTC-10）',
+  '-9': '阿拉斯加（UTC-9）',
+  '-8': '洛杉矶/温哥华（UTC-8）',
+  '-7': '丹佛（UTC-7）',
+  '-6': '墨西哥城（UTC-6）',
+  '-5': '纽约（UTC-5）',
+  '-4': '智利圣地亚哥（UTC-4）',
+  '-3': '巴西圣保罗（UTC-3）',
+  '-2': '南乔治亚岛（UTC-2）',
+  '-1': '亚速尔群岛（UTC-1）',
+  '0': '英国伦敦（UTC+0）',
+  '1': '法国巴黎（UTC+1）',
+  '2': '埃及开罗（UTC+2）',
+  '3': '俄罗斯莫斯科（UTC+3）',
+  '4': '阿联酋迪拜（UTC+4）',
+  '5': '巴基斯坦（UTC+5）',
+  '6': '孟加拉（UTC+6）',
+  '7': '泰国曼谷（UTC+7）',
+  '8': '中国北京（UTC+8）',
+  '9': '日本东京（UTC+9）',
+  '10': '澳大利亚悉尼（UTC+10）',
+  '11': '所罗门群岛（UTC+11）',
+  '12': '新西兰（UTC+12）',
+  '13': '汤加（UTC+13）',
+  '14': '基里巴斯（UTC+14）',
+};
+
+function timezonePlace(offset) {
+  // 把 offset 压缩到真实 UTC 范围 [-12, 14]
+  // UTC+20 和 UTC-4 是等价的（同一个太阳时）
+  let real = offset;
+  while (real > 14) real -= 24;
+  while (real < -12) real += 24;
+  return tzMap[String(real)] || `UTC${offset >= 0 ? '+' : ''}${offset}`;
+}
+
+// ========== 分类 ==========
+function classify(sleepHours, wakeHours, duration) {
+  // 老干部：傍晚早睡（12:00~20:59），不含凌晨
+  if (sleepHours >= 12 && sleepHours < 21) {
+    return { tag: 'tag-laoganbu', icon: '👴', label: '老干部作息',
+      detail: `${fmtTime(sleepHours)} 睡觉、${fmtTime(wakeHours)} 起床——退休生活，就是这么朴实无华。` };
+  }
+  if (duration > 12) {
+    return { tag: 'tag-god', icon: '😴', label: '睡神降临',
+      detail: `你睡了 ${duration.toFixed(1)} 小时。考拉一天睡 18~22 小时——你正在向考拉看齐。` };
+  }
+  if (sleepHours >= 21 && sleepHours <= 23 && duration >= 8) {
+    return { tag: 'tag-healthy', icon: '✅', label: '健康作息',
+      detail: `${fmtTime(sleepHours)} 睡、${fmtTime(wakeHours)} 起，标准健康作息，今天的你是满分人类。` };
+  }
+  // 时区移民：睡够了但不在健康窗口（凌晨睡、或 23 点以后睡）
+  if (duration >= 8) {
+    const offset = 23 - sleepHours;
+    const newSleep = (sleepHours + offset + 24) % 24;
+    const newWake = (wakeHours + offset + 24) % 24;
+    const place = timezonePlace(Math.round(offset));
+    return { tag: 'tag-timezone', icon: '✈️', label: '时区移民',
+      detail: `你睡了 ${duration.toFixed(1)} 小时，够是够了，但 ${fmtTime(sleepHours)} 才睡也太晚了。\n\n在${place}，你相当于 ${fmtTime(newSleep)} 睡觉、${fmtTime(newWake)} 起床——标准的健康作息！` };
+  }
+  // 星际难民
+  return { tag: 'tag-refugee', icon: '🚀', label: '星际难民',
+    detail: planetRescue(duration) };
+}
+
+// ========== 星球计算 ==========
+const planets = [
+  { name: '木星', day: 9.9 },
+  { name: '土星', day: 10.7 },
+  { name: '海王星', day: 16.1 },
+  { name: '天王星', day: 17.2 },
+];
+
+function planetRescue(duration) {
+  let best = null;
+  let bestEq = 0;
+  let bestDiff = Infinity;
+  for (const p of planets) {
+    const eq = (duration / p.day) * 24;
+    const diff = Math.abs(eq - 8);
+    if (eq >= 8 && diff < bestDiff) {
+      bestDiff = diff;
+      bestEq = eq;
+      best = p;
+    }
+  }
+  const base = `你只睡了 ${duration.toFixed(1)} 小时。在地球上，你永远欠睡眠债。`;
+  if (best) {
+    return `${base}\n\n但在${best.name}上（一天只有 ${best.day} 小时），你的 ${duration.toFixed(1)} 小时相当于地球的 ${bestEq.toFixed(1)} 小时！在那你天天睡够 8 小时。`;
+  }
+  return `${base}\n\n连太阳系都救不了你的作息了……保重。`;
+}
+
+// ========== 渲染 ==========
+document.getElementById('calc-btn').addEventListener('click', () => {
+  const sleepHours = toHours(document.getElementById('sleep-time').value);
+  const wakeHours = toHours(document.getElementById('wake-time').value);
+  const duration = calcDuration(sleepHours, wakeHours);
+
+  const result = classify(sleepHours, wakeHours, duration);
+  const div = document.getElementById('result');
+
+  div.className = 'result ' + result.tag;
+  div.innerHTML = `
+    <div class="result-icon">${result.icon}</div>
+    <div class="result-label">${result.label}</div>
+    <div class="result-duration">睡眠时长：${duration.toFixed(1)} 小时</div>
+    <div class="result-detail">${result.detail.replace(/\n/g, '<br>')}</div>
+  `;
+});
+</script>
+
+</body>
+</html>
