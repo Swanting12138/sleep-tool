@@ -167,7 +167,7 @@ h1 {
 
 <div class="card">
   <h1>健康作息计算器</h1>
-  <p class="subtitle">换个时区/换个星球，你的作息就是健康的</p>
+  <p class="subtitle">睡眠届最慈祥的母亲，必须让你睡够这个8小时</p>
 
   <div class="input-group">
     <label>我</label>
@@ -283,7 +283,7 @@ function classify(sleepHours, wakeHours, duration) {
   // 老干部：傍晚早睡（12:00~20:59），不含凌晨
   if (sleepHours >= 12 && sleepHours < 21) {
     return { tag: 'tag-laoganbu', icon: '👴', label: '老干部作息',
-      detail: `${fmtTime(sleepHours)} 睡觉、${fmtTime(wakeHours)} 起床——退休生活，就是这么朴实无华。` };
+      detail: `${fmtTime(sleepHours)} 睡觉、${fmtTime(wakeHours)} 起床——退休生活，就是这么朴实无华，话说回来了，你这个年纪怎么睡得着觉的！。` };
   }
   if (duration > 12) {
     return { tag: 'tag-god', icon: '😴', label: '睡神降临',
@@ -300,7 +300,7 @@ function classify(sleepHours, wakeHours, duration) {
     const newWake = (wakeHours + offset + 24) % 24;
     const place = timezonePlace(Math.round(offset));
     return { tag: 'tag-timezone', icon: '✈️', label: '时区移民',
-      detail: `你睡了 ${duration.toFixed(1)} 小时，够是够了，但 ${fmtTime(sleepHours)} 才睡也太晚了。\n\n在${place}，你相当于 ${fmtTime(newSleep)} 睡觉、${fmtTime(newWake)} 起床——标准的健康作息！` };
+      detail: `你睡了 ${duration.toFixed(1)} 小时，够是够了，但 ${fmtTime(sleepHours)} 才睡也太晚了。\n\n在${place}，你相当于 ${fmtTime(newSleep)} 睡觉、${fmtTime(newWake)} 起床，妥妥的标准健康作息！妈妈再也不说我作息混乱了` };
   }
   // 星际难民
   return { tag: 'tag-refugee', icon: '🚀', label: '星际难民',
@@ -343,7 +343,7 @@ function planetRescue(duration) {
   } else {
     result += `\n\n连太阳系都救不了你的作息了……`;
   }
-  result += `\n\n或者以 ${lightSpeed} 飞行——根据狭义相对论，时间膨胀效应让你的 ${duration.toFixed(1)} 小时变成地球上的 8 小时。`;
+  result += `\n\n要不以 ${lightSpeed} 飞行——根据狭义相对论，时间膨胀效应让你的 ${duration.toFixed(1)} 小时变成地球上的 8 小时。`;
 
   return result;
 }
