@@ -8,9 +8,9 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  background: #f5f0e8;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,149 +18,155 @@ body {
 }
 
 .card {
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 24px;
-  padding: 40px 32px;
+  background: #fffef9;
+  border-radius: 28px;
+  padding: 44px 36px 36px;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 24px rgba(80, 40, 10, 0.06);
 }
 
 h1 {
   text-align: center;
-  color: #e0dfff;
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  letter-spacing: 0.05em;
+  color: #3d2e1c;
+  font-size: 1.4rem;
+  font-weight: 650;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
 }
 
 .subtitle {
   text-align: center;
-  color: rgba(224,223,255,0.5);
+  color: #b8a890;
   font-size: 0.85rem;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
 }
 
 .input-group {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .input-group label {
-  color: #c4c0f0;
-  font-size: 1rem;
-  white-space: nowrap;
+  color: #5c4a32;
+  font-size: 0.95rem;
 }
 
 .input-group select {
   flex: 1;
-  padding: 12px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  font-size: 1rem;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #e5ddd0;
+  background: #fefcf7;
+  color: #3d2e1c;
+  font-size: 0.95rem;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23c4c0f0' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23b8a890' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 36px;
+  background-position: right 12px center;
+  padding-right: 32px;
+  transition: border-color 0.15s;
 }
 
 .input-group select:focus {
   outline: none;
-  border-color: rgba(160,140,255,0.6);
-  box-shadow: 0 0 0 3px rgba(160,140,255,0.15);
+  border-color: #e0a860;
 }
 
 .input-group select option {
-  background: #1a1744;
-  color: #fff;
+  background: #fffef9;
+  color: #3d2e1c;
 }
 
 .btn {
   width: 100%;
-  padding: 14px;
+  padding: 13px;
   border: none;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #6c5ce7, #a855f7);
-  color: #fff;
-  font-size: 1.1rem;
+  border-radius: 12px;
+  background: #e8a850;
+  color: #fffef9;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 8px;
-  transition: transform 0.1s, box-shadow 0.2s;
-  letter-spacing: 0.05em;
+  margin-top: 10px;
+  transition: background 0.15s;
+  letter-spacing: 0.04em;
 }
 
-.btn:hover {
-  box-shadow: 0 8px 30px rgba(108,92,231,0.4);
-}
-
-.btn:active {
-  transform: scale(0.97);
-}
+.btn:hover { background: #d4953a; }
+.btn:active { background: #c0852e; }
 
 .result {
-  margin-top: 24px;
-  border-radius: 16px;
-  padding: 24px;
+  margin-top: 28px;
+  border-radius: 14px;
+  padding: 22px 20px;
   text-align: center;
-  transition: all 0.3s;
 }
 
 .result.hidden { display: none; }
 
-.result-icon {
-  font-size: 3rem;
-  margin-bottom: 8px;
-}
+.result-icon { font-size: 2.8rem; margin-bottom: 6px; }
 
 .result-label {
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 650;
   margin-bottom: 6px;
 }
 
 .result-duration {
-  font-size: 0.95rem;
-  opacity: 0.8;
-  margin-bottom: 12px;
+  font-size: 0.88rem;
+  margin-bottom: 14px;
 }
 
 .result-detail {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  opacity: 0.85;
+  font-size: 0.88rem;
+  line-height: 1.7;
 }
 
 /* 各分类配色 */
-.tag-laoganbu { background: rgba(180,160,120,0.15); border: 1px solid rgba(180,160,120,0.3); }
-.tag-laoganbu .result-label { color: #c8b896; }
-.tag-laoganbu .result-detail { color: #a09078; }
+.tag-laoganbu {
+  background: #faf6ed;
+  border: 1.5px solid #e5d8be;
+}
+.tag-laoganbu .result-label { color: #8b7355; }
+.tag-laoganbu .result-duration { color: #a09078; }
+.tag-laoganbu .result-detail { color: #6b5d4a; }
 
-.tag-healthy { background: rgba(100,220,140,0.12); border: 1px solid rgba(100,220,140,0.3); }
-.tag-healthy .result-label { color: #6cdc8c; }
-.tag-healthy .result-detail { color: #50b870; }
+.tag-healthy {
+  background: #f3f9f0;
+  border: 1.5px solid #c8e0bc;
+}
+.tag-healthy .result-label { color: #5a8a42; }
+.tag-healthy .result-duration { color: #6b9a52; }
+.tag-healthy .result-detail { color: #4a7030; }
 
-.tag-god { background: rgba(160,140,255,0.12); border: 1px solid rgba(160,140,255,0.3); }
-.tag-god .result-label { color: #b8a8ff; }
-.tag-god .result-detail { color: #9080d0; }
+.tag-god {
+  background: #f6f0fb;
+  border: 1.5px solid #d8c8e8;
+}
+.tag-god .result-label { color: #7b5ea7; }
+.tag-god .result-duration { color: #8e6db8; }
+.tag-god .result-detail { color: #5a3e80; }
 
-.tag-timezone { background: rgba(100,180,240,0.12); border: 1px solid rgba(100,180,240,0.3); }
-.tag-timezone .result-label { color: #80c8ff; }
-.tag-timezone .result-detail { color: #60a8e0; }
+.tag-timezone {
+  background: #f0f5fa;
+  border: 1.5px solid #bcd4e8;
+}
+.tag-timezone .result-label { color: #4a789e; }
+.tag-timezone .result-duration { color: #5a88ae; }
+.tag-timezone .result-detail { color: #3a6080; }
 
-.tag-refugee { background: rgba(255,150,100,0.12); border: 1px solid rgba(255,150,100,0.3); }
-.tag-refugee .result-label { color: #ffa060; }
-.tag-refugee .result-detail { color: #d08040; }
+.tag-refugee {
+  background: #faf3ee;
+  border: 1.5px solid #e8ccb8;
+}
+.tag-refugee .result-label { color: #c07040; }
+.tag-refugee .result-duration { color: #d08050; }
+.tag-refugee .result-detail { color: #8b4a28; }
 </style>
 </head>
 <body>
