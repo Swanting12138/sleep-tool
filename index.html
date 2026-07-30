@@ -328,11 +328,20 @@ function planetRescue(duration) {
       best = p;
     }
   }
+  // 相对论方案：需要的光速比例
+  const beta = Math.sqrt(1 - Math.pow(duration / 8, 2));
+  const speedPct = (beta * 100).toFixed(1);
+  const lightSpeed = `${speedPct}% 光速`;
+
   const base = `你只睡了 ${duration.toFixed(1)} 小时。在地球上，你永远欠睡眠债。`;
+  let result = base;
+
   if (best) {
-    return `${base}\n\n但在${best.name}上（一天只有 ${best.day} 小时），你的 ${duration.toFixed(1)} 小时相当于地球的 ${bestEq.toFixed(1)} 小时！在那你天天睡够 8 小时。`;
+    result += `\n\n方案一：搬去${best.name}（一天只有 ${best.day} 小时），你的 ${duration.toFixed(1)} 小时相当于地球的 ${bestEq.toFixed(1)} 小时！`;
   }
-  return `${base}\n\n连太阳系都救不了你的作息了……保重。`;
+  result += `\n\n方案${best ? '二' : '一'}：以 ${lightSpeed} 飞行——根据狭义相对论，时间膨胀效应让你的 ${duration.toFixed(1)} 小时变成地球上的 8 小时。`;
+
+  return result;
 }
 
 // ========== 渲染 ==========
