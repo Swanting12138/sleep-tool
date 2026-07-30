@@ -286,31 +286,31 @@ function timezonePlace(offset) {
 
 // ========== 分类 ==========
 function classify(sleepHours, wakeHours, duration) {
-  // 老干部：傍晚早睡（12:00~20:59），不含凌晨
-  if (sleepHours >= 12 && sleepHours < 21) {
-    return { tag: 'tag-laoganbu', icon: '👴', label: '老干部作息',
-      detail: `${fmtTime(sleepHours)} 睡觉、${fmtTime(wakeHours)} 起床——退休生活，就是这么朴实无华，话说回来了，你这个年纪怎么睡得着觉啊！` };
-  }
+  // 时长优先判定
   if (duration > 12) {
     return { tag: 'tag-god', icon: '😴', label: '睡神降临',
       detail: `你睡了 ${duration.toFixed(1)} 小时。考拉一天睡 18~22 小时——你正在向考拉看齐。` };
   }
-  if (sleepHours >= 21 && sleepHours <= 23 && duration >= 8) {
+  if (duration < 8) {
+    return { tag: 'tag-refugee', icon: '🚀', label: '星际难民',
+      detail: planetRescue(duration) };
+  }
+  // 以下 duration 在 8~12 小时之间
+  if (sleepHours >= 21 && sleepHours <= 23) {
     return { tag: 'tag-healthy', icon: '✅', label: '健康作息',
       detail: `${fmtTime(sleepHours)} 睡、${fmtTime(wakeHours)} 起，标准健康作息，今天的你是满分人类。` };
   }
-  // 时区移民：睡够了但不在健康窗口（凌晨睡、或 23 点以后睡）
-  if (duration >= 8) {
-    const offset = 23 - sleepHours;
-    const newSleep = (sleepHours + offset + 24) % 24;
-    const newWake = (wakeHours + offset + 24) % 24;
-    const place = timezonePlace(Math.round(offset));
-    return { tag: 'tag-timezone', icon: '✈️', label: '时区移民',
-      detail: `你睡了 ${duration.toFixed(1)} 小时，够是够了，但 ${fmtTime(sleepHours)} 才睡也太晚了。\n\n在${place}，你相当于 ${fmtTime(newSleep)} 睡觉、${fmtTime(newWake)} 起床，妥妥的标准健康作息！妈妈再也不说我作息混乱了` };
+  if (sleepHours >= 12 && sleepHours < 21) {
+    return { tag: 'tag-laoganbu', icon: '👴', label: '老干部作息',
+      detail: `${fmtTime(sleepHours)} 睡觉、${fmtTime(wakeHours)} 起床——退休生活，就是这么朴实无华，话说回来了，你这个年纪怎么睡得着觉啊！` };
   }
-  // 星际难民
-  return { tag: 'tag-refugee', icon: '🚀', label: '星际难民',
-    detail: planetRescue(duration) };
+  // 时区移民：睡够了但不在健康窗口（凌晨睡、或 23 点以后睡）
+  const offset = 23 - sleepHours;
+  const newSleep = (sleepHours + offset + 24) % 24;
+  const newWake = (wakeHours + offset + 24) % 24;
+  const place = timezonePlace(Math.round(offset));
+  return { tag: 'tag-timezone', icon: '✈️', label: '时区移民',
+    detail: `你睡了 ${duration.toFixed(1)} 小时，够是够了，但 ${fmtTime(sleepHours)} 才睡也太晚了。\n\n在${place}，你相当于 ${fmtTime(newSleep)} 睡觉、${fmtTime(newWake)} 起床，妥妥的标准健康作息！妈妈再也不说我作息混乱了` };
 }
 
 // ========== 星球计算 ==========
