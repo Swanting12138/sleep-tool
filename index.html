@@ -337,9 +337,11 @@ function planetRescue(duration) {
   let result = base;
 
   if (best) {
-    result += `\n\n方案一：搬去${best.name}（一天只有 ${best.day} 小时），你的 ${duration.toFixed(1)} 小时相当于地球的 ${bestEq.toFixed(1)} 小时！`;
+    result += `\n\n搬去${best.name}（一天只有 ${best.day} 小时），你的 ${duration.toFixed(1)} 小时相当于地球的 ${bestEq.toFixed(1)} 小时！`;
+  } else {
+    result += `\n\n连太阳系都救不了你的作息了……`;
   }
-  result += `\n\n方案${best ? '二' : '一'}：以 ${lightSpeed} 飞行——根据狭义相对论，时间膨胀效应让你的 ${duration.toFixed(1)} 小时变成地球上的 8 小时。`;
+  result += `\n\n或者以 ${lightSpeed} 飞行——根据狭义相对论，时间膨胀效应让你的 ${duration.toFixed(1)} 小时变成地球上的 8 小时。`;
 
   return result;
 }
