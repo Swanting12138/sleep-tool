@@ -331,7 +331,9 @@ function planetRescue(duration) {
   // 相对论方案：需要的光速比例
   const beta = Math.sqrt(1 - Math.pow(duration / 8, 2));
   const speedPct = (beta * 100).toFixed(1);
-  const lightSpeed = `${speedPct}% 光速`;
+  const c = 1079252849; // 光速 km/h
+  const kmh = (beta * c / 1e8).toFixed(1);
+  const lightSpeed = `${speedPct}% 光速（约 ${kmh} 亿 km/h）`;
 
   const base = `你只睡了 ${duration.toFixed(1)} 小时。在地球上，你永远欠睡眠债。`;
   let result = base;
